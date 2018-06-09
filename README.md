@@ -7,7 +7,7 @@
 ### Thursday, June 7th, 2018
 TIL: 
 - `dep` is a tool for managing dependencies for Go projects, similar to how webpack bundles packages
-- to import dep, input `go get -u github.com/golang/dep/...`
+- to download `dep` package, input `go get -u github.com/golang/dep/...`
 - gherklin (https://github.com/cucumber/cucumber/wiki/Gherkin)
 - goconvey (https://github.com/smartystreets/goconvey)
 
