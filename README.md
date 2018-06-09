@@ -1,5 +1,9 @@
 ## Week 1
 
+### Monday, June 4th - Wednesday, June 6th
+- Orientation, tour, meet with team, etc.
+- Setup environment
+
 ### Thursday, June 7th, 2018
 TIL: 
 - `dep` is a tool for managing dependencies for Go projects, similar to how webpack bundles packages
@@ -7,11 +11,12 @@ TIL:
 - gherklin (https://github.com/cucumber/cucumber/wiki/Gherkin)
 - goconvey (https://github.com/smartystreets/goconvey)
 
-Terminal commands used:  
+TCIL (Terminal Commands I Learned):  
 1. `dep init` (set up a new project)
 2. `dep ensure` (install project's dependencies)
 3. `go test -v`  (list the test cases like rspec)
 4. `go format <insert filename>` (standard for formatting Go code)
+5. `gdir` is an alias to `~/projects/apps/gocode`
 
 Types:
 - **int**, int8, int16, int32, **int64**
