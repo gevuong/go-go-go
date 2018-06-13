@@ -19,8 +19,6 @@
 ### What you need to know about maps:
 - You can use any type you want as a key, as long as the keys are all the same. All values must be of same type as well. 
 
-
-
 ### Value Types vs Reference Types 
 - **Value types: int, float, string, boolean, struct. If you pass these types into a fcn, you want to use pointers to change these values in a fcn.**
 - With value types in Go, we need to worry about pointers if we want to pass a value to a fcn and want to modify the original value inside that fcn. With reference types, we do not need to worry about pointers. 
