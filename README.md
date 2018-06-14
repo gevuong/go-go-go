@@ -1,9 +1,5 @@
 ## Week 1
 
-### Monday, June 4th - Wednesday, June 6th
-- Orientation, tour, meet with team, etc.
-- Setup environment
-
 ### Thursday, June 7th, 2018
 TIL: 
 - `dep` is a tool for managing dependencies for Go projects, similar to how webpack bundles packages
@@ -16,5 +12,6 @@ TIL:
 4. `go format <insert filename>` (standard for formatting Go code)
 5. `gdir` is an alias to `~/projects/apps/gocode`
 
-Did you know?
-Go knows what the types of your values are at compile time, and can tell whether they're being used appropriately.
+
+## Week 2
+- `cd -` returns to previous directory
