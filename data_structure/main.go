@@ -98,7 +98,7 @@ func main() {
 	}
 }
 
-// *float64 means to pass a pointer of type float64. *pointer turns pointer into original value
+//*float64 means to pass a pointer of type float64. *pointer turns pointer into original value
 func halve(pointer *float64) {
 	*pointer = *pointer / 2
 	fmt.Println("myNumber in 'halve' is: ", *pointer)
