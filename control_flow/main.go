@@ -16,6 +16,31 @@ func main() {
 	}
 
 	youWin()
+
+	fmt.Println("-----SYNTAX PART 2-----")
+	var (
+		even  int
+		odd   int
+		total int
+	)
+	numbers := []int{1, 2, 3, 0, 4, 5, 6}
+
+Abort:
+	for i := 0; i < 7; i++ {
+		for _, n := range numbers {
+			total++
+			if n == 0 {
+				break Abort // break out of two nested for loops
+			}
+			if n%2 == 0 {
+				even++
+			} else {
+				odd++
+			}
+		}
+
+	}
+	fmt.Printf("Even %d, Odd %d total %d\n", even, odd, total)
 }
 
 func playHand(score int) string {
@@ -34,7 +59,7 @@ func youWin() {
 	switch doorNumber {
 	case 1:
 		fmt.Println("a new car!") // not printed
-		fallthrough               // only the selected case runs by default, unless you includde `fallthrough`
+		fallthrough               // only the selected case runs by default, unless you include `fallthrough`
 	case 2:
 		fmt.Println("a llama!") // printed
 	default:

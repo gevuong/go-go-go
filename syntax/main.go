@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-linux/welcome"
+	"go-linux/syntax/welcome"
 	"log"
 	"math"
 	"net"
@@ -90,6 +90,31 @@ func main() {
 	} else {
 		fmt.Println(fileInfo.Size())
 	}
+
+	fmt.Println("-----SYNTAX PART 2-----")
+	var (
+		even  int
+		odd   int
+		total int
+	)
+	numbers := []int{1, 2, 3, 0, 4, 5, 6}
+
+Abort:
+	for i := 0; i < 7; i++ {
+		for _, n := range numbers {
+			total++
+			if n == 0 {
+				break Abort // break out of two nested for loops
+			}
+			if n%2 == 0 {
+				even++
+			} else {
+				odd++
+			}
+		}
+
+	}
+	fmt.Printf("Even %d, Odd %d total %d\n", even, odd, total)
 
 }
 

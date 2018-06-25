@@ -14,4 +14,4 @@ TIL:
 
 
 ## Week 2
-- `cd -` returns to previous directory
+- `cd -` returns to previous working directory
