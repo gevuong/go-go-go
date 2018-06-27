@@ -15,3 +15,4 @@ TIL:
 
 ## Week 2
 - `cd -` returns to previous working directory
+- test github
