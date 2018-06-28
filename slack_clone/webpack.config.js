@@ -2,9 +2,9 @@
 var path = require('path');
 
 module.exports = {
-    entry: './index.jsx',
+    entry: './index',
     output: {
-        filename: './bundle.js',
+        filename: './bundle',
     },
     module: {
         rules: [
