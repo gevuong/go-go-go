@@ -5,6 +5,7 @@ import (
 	"go-linux/syntax/welcome"
 	"log"
 	"math"
+	"math/rand"
 	"net"
 	"os"
 	"reflect"
@@ -17,6 +18,16 @@ var myNumber = 1.25
 var g = 1 // package-level variable
 
 func main() {
+
+	rand.Seed(time.Now().UTC().UnixNano())
+	fmt.Println(rand.Intn(10000))
+	fmt.Println(rand.Intn(10000))
+	fmt.Println(rand.Intn(10000))
+
+	fmt.Sprintf("%09d", rand.Intn(1000000000))
+	fmt.Sprintf("%09d", rand.Intn(1000000000))
+
+	fmt.Println("----------")
 	fmt.Println(stringutil.Reverse("hello"))
 	roundUp := math.Ceil(myNumber)
 	roundDown := math.Floor(myNumber)
