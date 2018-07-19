@@ -12,6 +12,14 @@ import (
 // In Go, slices are built on top of arrays, and slices are dynamic, meaning they
 // can grow and shrink. Whereas arrays are a fixed size.
 func main() {
+	// To fetch data dynamically:
+	// res, err := http.Get("http://lpo.dt.navy.mil/data/DM/Environmental_Data_Deep_Moor_2015.txt")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// rdr := csv.NewReader(res.Body)
+	// then implement the same code as below with rdr.
+
 	// Open file and return type File
 	f, err := os.Open("./Environmental_Data_Deep_Moor_2015.txt")
 	// assume that a panic will be immediately fatal, for the entire program,
