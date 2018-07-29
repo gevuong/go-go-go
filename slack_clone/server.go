@@ -7,6 +7,22 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// Message contains name and data. Fields need to be capitalized to be made public.
+// json.Marshal is not part of the main package, so it doesn't have access to
+// fields in lowercase.
+type Message struct {
+	Name string `json:"name"` // add field tags, a kind of metadata to specify
+	// special encoding
+	Data interface{} `json:"data"` // empty interface defines no methods, which means that every
+	// data type in Go implements the behavior of an empty interface.
+}
+
+// Channel holds name and ID
+type Channel struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
 func main() {
 	// pass in URL pattern and handler fcn to execute
 	http.HandleFunc("/", handler)
@@ -42,17 +58,25 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// if Upgrade is successful, read and write message in websocket
 	for {
 		// ReadMessage is a fcn that blocks until a message is received.
-		msgType, msg, err := socket.ReadMessage()
-		if err != nil {
+		// msgType, msg, err := socket.ReadMessage()
+		// if err != nil {
+		// 	fmt.Println(err)
+		// 	return
+		// }
+		// fmt.Println(string(msg), msgType)
+
+		var inMsg Message
+		if err := socket.ReadJSON(&inMsg); err != nil {
 			fmt.Println(err)
-			return
+			break
 		}
-		fmt.Println(string(msg), msgType)
+		fmt.Printf("%#v\n", inMsg) // adds data type for field
+		fmt.Printf("%v\n", inMsg)
 		// echo the msg back to the client
 		// an 'if' condition allows you to specify statement before conditional
-		if err := socket.WriteMessage(msgType, msg); err != nil {
-			fmt.Println(err)
-			return
-		}
+		// if err := socket.WriteMessage(msgType, msg); err != nil {
+		// 	fmt.Println(err)
+		// 	return
+		// }
 	}
 }
