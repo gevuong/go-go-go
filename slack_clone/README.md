@@ -30,6 +30,10 @@
 - Very easy to create, by simply adding `go` keyword in front of a function call. 
 - Very lightweight in comparison to other languages. A goroutine requires very little server resources, a couple kB of stack memory. **This means you can literally create thousands of go routines without crashing your server.** While other languages require a couple orders of magnitude more memory for each thread created.
 - As a result, go routines make creating highly concurrent applications fairly simple.
+- Go routines allow us to run multiple separate tasks, concurrently.
+**Must avoid situations where two or more goroutines are modifying shared data at the same time.** This can lead to race conditions.
+- Channels provide a safe way of passing values between go routines. There is no risk of having the go routines accessing whatever values passed at the same time.
+- Popular quote in Go: "Do not communicate by sharing memory, share memory by communicating."
 
 - Run on jsbin to test subscribing and adding channel concurrently using go routines.
     ```
