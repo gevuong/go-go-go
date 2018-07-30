@@ -23,3 +23,35 @@
     }
     ```
 - Next, go run main.go and click Run JS code in `jsbin`. Terminal should log message struct.
+
+
+### Goroutines 
+- Think of it as a separate execution thread. This means that if a fcn (i.e. subscribeChannel) is originally blocking, and we still want to receive new messages in the meantime, adding a go routine to fcn not block the flow control of the main program. 
+- Very easy to create, by simply adding `go` keyword in front of a function call. 
+- Very lightweight in comparison to other languages. A goroutine requires very little server resources, a couple kB of stack memory. **This means you can literally create thousands of go routines without crashing your server.** While other languages require a couple orders of magnitude more memory for each thread created.
+- As a result, go routines make creating highly concurrent applications fairly simple.
+
+- Run on jsbin to test subscribing and adding channel concurrently using go routines.
+    ```
+    let msg = {
+    name: 'channel add',
+    data: {
+        name: 'hardware support'
+    }
+    }
+
+    let subMsg = {
+    name: 'channel subscribe'
+    }
+
+    let ws = new WebSocket('ws://localhost:4000');
+
+    ws.onopen = () => {
+    ws.send(JSON.stringify(subMsg))
+    ws.send(JSON.stringify(msg));
+    }
+
+    ws.onmessage = (e) => {
+    console.log(e.data);
+    }
+    ```
