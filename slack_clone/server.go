@@ -26,36 +26,18 @@ type Channel struct {
 }
 
 func main() {
+	router := NewRouter()
+	// When router receives "channel add" msg, call the addChannel fcn.
+	router.Handle("channel add", addChannel)
+
 	// pass in URL pattern and handler fcn to execute
-	http.HandleFunc("/", handler)
+	http.Handle("/", router)
 	// waits until port is connected to or app is blocked
 	fmt.Println("Listening on port 4000...")
 	http.ListenAndServe(":4000", nil)
 }
 
-// upgrader "upgrades" the HTTP server connection to the WebSocket protocol.
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-	// modern web browsers allow web socket connections to any host. We want a
-	// no browser based same-origin policy. Gorilla websockets
-	// default behavior forces a same origin policy. Lets leave origin policy for
-	// the server to decide. The server will determine if it's okay for the browser
-	// to make a websocket connection.
-	//
-	// Assign a new fcn to CheckOrigin and return TRUE indicating we'll allow
-	// connections from any origin.
-	CheckOrigin: func(r *http.Request) bool { return true },
-}
-
 func handler(w http.ResponseWriter, r *http.Request) {
-	// pass in a writer and string we'd like written as a response
-	// fmt.Fprintf(w, "this is how we create a basic HTTP web server in Go")
-	socket, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 
 	// if Upgrade is successful, read and write message in websocket
 	for {
@@ -98,7 +80,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//
 func addChannel(data interface{}) error {
 	var channel Channel
 	// use mapstructure pkg for type checking and value checking, otherwise panic will

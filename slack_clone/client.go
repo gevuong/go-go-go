@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 // Message contains name and data. Fields need to be capitalized to be made public.
@@ -16,52 +16,38 @@ type Message struct {
 	// data type in Go implements the behavior of an empty interface.
 }
 
-// Client stores send channel
+// Client is responsible for reading and writing to the web socket. So Client will
+// need to have access to the websocket.
 type Client struct {
-	send chan Message
+	send   chan Message
+	socket *websocket.Conn
+}
+
+func (client *Client) Read() {
+	var msg Message
+	for {
+		if err := client.socket.ReadJSON(&msg); err != nil {
+			break
+		}
+	}
 }
 
 // method of Client to send messages to the client over the websocket.
-func (client *Client) write() {
+func (client *Client) Write() {
 	for msg := range client.send {
 		fmt.Printf("%#v\n", msg)
+		if err := client.socket.WriteJSON(msg); err != nil {
+			break
+		}
 	}
+	client.socket.Close()
 }
 
-// method to start DB query that will stream channel changes (i.e. add, edit, delete)
-func (client *Client) subscribeChannels() {
-	for {
-		// provides a random time duration of up to 1sec.
-		time.Sleep(r())
-		client.send <- Message{"channel add", ""}
-	}
-}
-
-// method to start DB query that will stream channel changes (i.e. add, edit, delete)
-func (client *Client) subscribeMessages() {
-	for {
-		// provides a random time duration of up to 1sec.
-		time.Sleep(r())
-		client.send <- Message{"message add", ""}
-	}
-}
-
-// a throwaway fcn that returns a random duration between 0-1 sec.
-func r() time.Duration {
-	return time.Millisecond * time.Duration(rand.Intn(1000))
-}
-
-func NewClient() *Client {
+func NewClient(socket *websocket.Conn) *Client {
 	return &Client{
-		send: make(chan Message),
+		send:   make(chan Message),
+		socket: socket,
 	}
-}
-func main() {
-	client := NewClient()
-	go client.subscribeChannels()
-	go client.subscribeMessages()
-	client.write()
-
 }
 
 // Example:
