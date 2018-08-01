@@ -6,6 +6,8 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+type FindHandler func(string) (Handler, bool)
+
 // Message contains name and data. Fields need to be capitalized to be made public.
 // json.Marshal is not part of the main package, so it doesn't have access to
 // fields in lowercase.
@@ -19,17 +21,24 @@ type Message struct {
 // Client is responsible for reading and writing to the web socket. So Client will
 // need to have access to the websocket.
 type Client struct {
-	send   chan Message
-	socket *websocket.Conn
+	send        chan Message
+	socket      *websocket.Conn
+	findHandler FindHandler
 }
 
+// Client reads message
 func (client *Client) Read() {
 	var msg Message
 	for {
 		if err := client.socket.ReadJSON(&msg); err != nil {
 			break
 		}
+		if handler, found := client.findHandler(msg.Name); found {
+			handler(client, msg.Data)
+		}
 	}
+	// close websocket
+	client.socket.Close()
 }
 
 // method of Client to send messages to the client over the websocket.
@@ -43,10 +52,11 @@ func (client *Client) Write() {
 	client.socket.Close()
 }
 
-func NewClient(socket *websocket.Conn) *Client {
+func NewClient(socket *websocket.Conn, findHandler FindHandler) *Client {
 	return &Client{
-		send:   make(chan Message),
-		socket: socket,
+		send:        make(chan Message),
+		socket:      socket,
+		findHandler: findHandler,
 	}
 }
 

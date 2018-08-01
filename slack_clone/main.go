@@ -37,6 +37,7 @@ func main() {
 	http.ListenAndServe(":4000", nil)
 }
 
+//
 func handler(w http.ResponseWriter, r *http.Request) {
 
 	// if Upgrade is successful, read and write message in websocket

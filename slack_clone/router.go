@@ -42,6 +42,13 @@ func (e *Router) Handle(msgName string, handler Handler) {
 	e.rules[msgName] = handler
 }
 
+func (r *Router) findHandler(msgName string) (Handler, bool) {
+	// found is an optional second value when getting value from a map, which is
+	// a boolean indicating whether there was a value stored in the provided key.
+	handler, found := r.rules[msgName]
+	return handler, found
+}
+
 func (e *Router) serveHTTP(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintf(w, "this is how we create a basic HTTP web server in Go")
 	// Upgrade upgrades HTTP request connection to a websocket connection
@@ -52,7 +59,7 @@ func (e *Router) serveHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	client := NewClient(socket)
+	client := NewClient(socket, e.FindHandler)
 	// methods below will be running independently, so they need to be in separate
 	// go routines
 	go client.Write()
