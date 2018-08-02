@@ -6,18 +6,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/mitchellh/mapstructure"
 )
-
-// Message contains name and data. Fields need to be capitalized to be made public.
-// json.Marshal is not part of the main package, so it doesn't have access to
-// fields in lowercase.
-type Message struct {
-	Name string `json:"name"` // add field tags, a kind of metadata to specify
-	// special encoding
-	Data interface{} `json:"data"` // empty interface defines no methods, which means that every
-	// data type in Go implements the behavior of an empty interface.
-}
 
 // Channel holds name and ID
 type Channel struct {
@@ -79,26 +68,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		// 	return
 		// }
 	}
-}
-
-func addChannel(data interface{}) error {
-	var channel Channel
-	// use mapstructure pkg for type checking and value checking, otherwise panic will
-	// occur if assertions are incorrect.
-	err := mapstructure.Decode(data, &channel)
-	if err != nil {
-		return err
-	}
-	// type assertion tells Go that data and name contains a more specific type.
-	// For example, value of name property is a string.
-	// I guess its similar to PropTypes in React.
-	// channelMap := data.(map[string]interface{})
-	// channel.Name = channelMap["name"].(string)
-
-	channel.ID = "1" // ID is normally set by rethinkDB when record is inserted.
-	// fmt.Printf("%v\n", channel)
-	fmt.Println("added channel")
-	return nil
 }
 
 // take a socket parameter that is a pointer to a websocket connection

@@ -11,8 +11,3 @@ TIL:
 3. `go test -v`  (list the test cases like rspec)
 4. `go format <insert filename>` (standard for formatting Go code)
 5. `gdir` is an alias to `~/projects/apps/gocode`
-
-
-## Week 2
-- `cd -` returns to previous working directory
-- test github
